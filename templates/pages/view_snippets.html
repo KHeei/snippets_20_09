@@ -2,30 +2,36 @@
 
 {% block content %}
 <!-- Begin page content -->
-        <div class="row">
-            <div class="col">
-                <p>На данной страницы будут отображаться все созданные сниппеты.</p>
-                <p>Пока тут пусто, скоро мы это исправим!</p>
-                <hr>
-            </div>
-        </div>
-
-        <div class="row">
+ <div class="row">
             <div class="col-4 offset-2">
                 Список сниппетов:
-                <table border="1">
-                    {% for i in snippets %}
-                    <tr>
-                        <td>{{i.name}}</td>
-                        <td>{{i.lang}}</td>
-                        <td>{{i.code}}</td>
-                        <td>{{i.creation_date}}</td>
+                <table class="table table-striped" style="width:800px">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Язык</th>
+                            <th scope="col">Snippet</th>
+                            <th scope="col">Дата создания</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in snippets %}
+                        <tr>
+                            <td>{{i.id}}</td>
+                            <td> <a href="{% url 'Edit' i.id %}"><i class="far fa-edit"></i></a> {{i.name}}</td>
+                            <td>{{i.lang}}</td>
+                            <td>{{i.code}}</td>
+                            <td>{{i.creation_date|date:"Y-m-d"}}</td>
+                            <td><a href="{% url 'Delete' i.id %}"><i class="fas fa-ban" style="color:red"></i></a></td>
                     </tr>
 
                     {% endfor %}
+                    <tbody>
                 </table>
 
 
             </div>
-        </div>
+</div>
 {% endblock %}

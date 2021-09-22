@@ -3,26 +3,12 @@
 {% block content %}
 <div class="row">
             <div class="col">
-                <form action="{% url 'Create' %}" method="POST">
+                <form action="" method="POST">
                     {% csrf_token %}
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input type="text" name="name" class="form-control form-control-lg" placeholder="Название сниппета">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input type="text" name="lang" placeholder="Язык виджета">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col">
-                            <textarea name="code" cols="96" rows="10" placeholder="Код сниппета"></textarea>
-                        </div>
-                    </div>
+                    {{ form.as_p }}
                     <div class="form-group row">
                         <div class="col-8">
-                            <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
+                            <input type="submit" class="btn btn-primary btn-block" value="{{button_name|default:'Сохранить'}}">
                         </div>
                     </div>
                 </form>
