@@ -12,11 +12,38 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="form-inline"><a class="btn btn-outline-secondary" href="{% url 'Add' %}">Добавить сниппет</a></li>
-                    <li class="form-inline"><a class="btn btn-outline-info" href="{% url 'List' %}">Посмотреть
-                        сниппеты</a></li>
+                    <li class="form-inline menu"><a class="btn btn-outline-secondary" href="{% url 'Add' %}">Добавить сниппет</a></li>
+                    <li class="form-inline menu"><a class="btn btn-outline-info" href="{% url 'List' %}">Посмотреть сниппеты</a></li>
+                    <li class="form-inline menu"><a class="btn btn-outline-info" href="">Мои сниппеты</a></li>
                 </ul>
             </div>
+        </div>
+        <div class="row" style="color:white; margin-right:30px;">
+        {% if request.user.is_authenticated %}
+            <b>Welcome, {{request.user.username }}</b>
+            <a style="padding-left:10px;" href="{% url 'Logout' %}">Выйти</a>
+        {% else %}
+            {% if error %}
+            <span style="color:red; padding-top:7px; padding-right: 10px;">{{ error }}</span>
+            {% endif %}
+                <div class="navbar-nav mr-right nav-item dropdown dropdown-menu-right">
+                   <a class="btn btn-outline-primary my-2 my-sm-0 dropdown-toggle" href="#" id="navbarDropdown"
+                      role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Авторизация</a>
+                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                       <form class="w-100 px-4 py-3" action="{% url 'Login' %}" method="POST">
+                           {% csrf_token %}
+                           <div class="form-group form-inline">
+                               <input type="text" name="username" class="form-control" placeholder="Username" required>
+                           </div>
+                           <div class="form-group form-inline">
+                               <input type="password" name="password" class="form-control" placeholder="Password" required>
+                           </div>
+                           <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                       </form>
+                       <div class="dropdown-divider"></div>
+                   </div>
+                </div>
+        {% endif %}
         </div>
     </nav>
 </header>

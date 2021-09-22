@@ -2,13 +2,15 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
 from MainApp.froms import SnippetForm
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-
+@login_required
 def add_snippet_page(request):
     if request.method == "GET":
         form = SnippetForm()
@@ -24,6 +26,7 @@ def add_snippet_page(request):
         return redirect('List')
     raise Http404
 
+
 def snippets_page(request):
     snippet = Snippet.objects.all()
     context = {
@@ -32,8 +35,8 @@ def snippets_page(request):
     }
     return render(request, 'pages/view_snippets.html', context)
 
-
-def snippet_edit(request,id):
+@login_required
+def snippet_edit(request, id):
     if request.method == "GET":
         snippet = get_object_or_404(Snippet, pk=id)
         form = SnippetForm(instance=snippet)
@@ -49,8 +52,30 @@ def snippet_edit(request,id):
         form.save()
         return redirect('List')
 
+@login_required
 def snippet_delete(request, id):
     if request.method == "GET":
         snippet = get_object_or_404(Snippet, pk=id)
         snippet.delete()
         return redirect('List')
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        # print("username =", username)
+        # print("password =", password)
+        user = auth.authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+        else:
+            context = {}
+            context["error"] = "Введен неправильный логин или пароль"
+            return render(request, 'pages/index.html', context)
+    return redirect('/')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('Home')

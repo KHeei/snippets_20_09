@@ -13,18 +13,21 @@
                             <th scope="col">Язык</th>
                             <th scope="col">Snippet</th>
                             <th scope="col">Дата создания</th>
-                            <th scope="col"></th>
+                            {% if request.user.is_authenticated %}<th scope="col"></th> {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for i in snippets %}
                         <tr>
                             <td>{{i.id}}</td>
-                            <td> <a href="{% url 'Edit' i.id %}"><i class="far fa-edit"></i></a> {{i.name}}</td>
+                            <td>{% if request.user.is_authenticated %} <a href="{% url 'Edit' i.id %}"><i class="far fa-edit"></i></a>{% endif %}
+                                {{i.name}}</td>
                             <td>{{i.lang}}</td>
                             <td>{{i.code}}</td>
                             <td>{{i.creation_date|date:"Y-m-d"}}</td>
+                            {% if request.user.is_authenticated %}
                             <td><a href="{% url 'Delete' i.id %}"><i class="fas fa-ban" style="color:red"></i></a></td>
+                            {% endif %}
                     </tr>
 
                     {% endfor %}
