@@ -13,6 +13,7 @@
                             <th scope="col">Язык</th>
                             <th scope="col">Snippet</th>
                             <th scope="col">Дата создания</th>
+                            <th scope="col">Автор</th>
                             {% if request.user.is_authenticated %}<th scope="col"></th> {% endif %}
                         </tr>
                     </thead>
@@ -25,6 +26,7 @@
                             <td>{{i.lang}}</td>
                             <td>{{i.code}}</td>
                             <td>{{i.creation_date|date:"Y-m-d"}}</td>
+                            <td>{{i.author.username|default:"Отсутвует"}}</td>
                             {% if request.user.is_authenticated %}
                             <td><a href="{% url 'Delete' i.id %}"><i class="fas fa-ban" style="color:red"></i></a></td>
                             {% endif %}

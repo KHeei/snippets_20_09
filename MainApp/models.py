@@ -17,3 +17,6 @@ class Snippet(models.Model):
     code = models.TextField(max_length=5000)
     creation_date = models.DateTimeField(default=datetime.now())
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+
+    def __repr__(self):
+        return f"S: {self.name} {self.author.username}"

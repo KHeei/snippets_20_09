@@ -10,6 +10,7 @@ def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
+
 @login_required
 def add_snippet_page(request):
     if request.method == "GET":
@@ -18,11 +19,12 @@ def add_snippet_page(request):
                    'form': form
                    }
         return render(request, 'pages/add_snippet.html', context)
-
     print(request.POST)
     form = SnippetForm(request.POST)
     if form.is_valid():
-        form.save()
+        snippet = form.save(commit=False)
+        snippet.author = request.user
+        snippet.save()
         return redirect('List')
     raise Http404
 
@@ -31,6 +33,16 @@ def snippets_page(request):
     snippet = Snippet.objects.all()
     context = {
         "pagename": 'Просмотр сниппетов',
+        "snippets": snippet
+    }
+    return render(request, 'pages/view_snippets.html', context)
+
+
+@login_required
+def snippets_my(request):
+    snippet = Snippet.objects.filter(author=request.user)
+    context = {
+        "pagename": 'Просмотр моих сниппетов',
         "snippets": snippet
     }
     return render(request, 'pages/view_snippets.html', context)
@@ -51,6 +63,7 @@ def snippet_edit(request, id):
     if form.is_valid():
         form.save()
         return redirect('List')
+
 
 @login_required
 def snippet_delete(request, id):
