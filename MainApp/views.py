@@ -73,9 +73,11 @@ def snippet_delete(request, id):
         snippet.delete()
         return redirect('List')
 
-@login_required
+
 def snippet_page(request, id):
     snippet = get_object_or_404(Snippet, pk=id)
+    if snippet.is_private and snippet.author != request.user:
+        raise Http404
     comment = snippet.comments.all()
     form = CommentForm()
     context = {
@@ -128,6 +130,7 @@ def register(request):
         return render(request, 'pages/register.html', context)
 
 
+@login_required
 def comment_add(request):
     if request.method == 'POST':
         form = CommentForm(request.POST)
