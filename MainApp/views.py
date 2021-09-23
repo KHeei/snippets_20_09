@@ -5,6 +5,7 @@ from MainApp.froms import SnippetForm, CommentForm
 from MainApp.froms import UserForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def index_page(request):
@@ -26,6 +27,7 @@ def add_snippet_page(request):
         snippet = form.save(commit=False)
         snippet.author = request.user
         snippet.save()
+        messages.success(request, 'Сниппет добавлен успешно')
         return redirect('List')
     raise Http404
 
@@ -64,6 +66,7 @@ def snippet_edit(request, id):
     form = SnippetForm(request.POST, instance=snippet)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Сниппет изменен')
         return redirect('List')
 
 
@@ -98,9 +101,11 @@ def login(request):
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
+            messages.success(request, 'Вход выполнен успешно')
         else:
             context = {}
             context["error"] = "Введен неправильный логин или пароль"
+            messages.error(request, 'Введен неправильный логин или пароль')
             return render(request, 'pages/index.html', context)
     return redirect('/')
 
@@ -115,6 +120,7 @@ def register(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегистрированны')
             return redirect('Home')
         else:
             context = {
@@ -142,6 +148,7 @@ def comment_add(request):
             snippet = Snippet.objects.get(id=snippet_id)
             comment.snippet = snippet
             comment.save()
+            messages.success(request, 'Комментарий добавлен')
             return redirect(f'/snippets/page/{snippet_id}')
 
     raise Http404

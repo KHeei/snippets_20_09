@@ -1,3 +1,30 @@
 .menu{
 padding-left:10px;
 }
+
+.messages{
+margin-top:55px;
+margin-left:40%;
+width:400px;
+font-size: 18px;
+color:white;
+border-radius: 5px;
+text-align:center;
+}
+
+.success{
+padding-left:15px;
+background-color:#3CB371;
+border-radius: 5px;
+}
+
+.error{
+padding-left:15px;
+background-color:#F08080;
+border-radius: 5px;
+}
+
+.close{
+padding-top:3px;
+padding-right:10px;
+}
