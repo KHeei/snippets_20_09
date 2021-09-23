@@ -20,7 +20,10 @@ class Snippet(models.Model):
     is_private = models.BooleanField(default=False)
 
     def __repr__(self):
-        return f"S: {self.name} {self.author.username}"
+        return f"S: {self.name} {self.author}"
+
+    def __str__(self):
+        return self.__repr__()
 
 
 class Comment(models.Model):

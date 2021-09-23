@@ -1,0 +1,178 @@
+[
+  {
+    "model": "MainApp.snippet",
+    "pk": 6,
+    "fields": {
+      "name": "EDIT",
+      "lang": "php",
+      "code": "Я уже забыл PHP",
+      "creation_date": "2021-09-22T11:00:12.086Z",
+      "author": null,
+      "is_private": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 7,
+    "fields": {
+      "name": "DFA",
+      "lang": "c#",
+      "code": "INT A = 1",
+      "creation_date": "2021-09-22T11:34:31.416Z",
+      "author": null,
+      "is_private": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 8,
+    "fields": {
+      "name": "Hello world",
+      "lang": "C#",
+      "code": "Console.WriteLine(\"Hello world\");",
+      "creation_date": "2021-09-22T11:34:31.416Z",
+      "author": null,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 9,
+    "fields": {
+      "name": "String",
+      "lang": "C++",
+      "code": "std::string = \"\";",
+      "creation_date": "2021-09-22T12:11:25.382Z",
+      "author": 1,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 11,
+    "fields": {
+      "name": "Hello world",
+      "lang": "Python",
+      "code": "print(\"Hello world\")",
+      "creation_date": "2021-09-22T12:50:56.844Z",
+      "author": 1,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 12,
+    "fields": {
+      "name": "Hello world",
+      "lang": "js",
+      "code": "Console.log(\"Hello world\")",
+      "creation_date": "2021-09-23T07:12:34.842Z",
+      "author": 1,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 13,
+    "fields": {
+      "name": "Test",
+      "lang": "c#",
+      "code": "Test",
+      "creation_date": "2021-09-23T07:18:38.043Z",
+      "author": 1,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 14,
+    "fields": {
+      "name": "Some code",
+      "lang": "cpp",
+      "code": "int main...",
+      "creation_date": "2021-09-23T07:18:38.043Z",
+      "author": 1,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 15,
+    "fields": {
+      "name": "Private Snippet",
+      "lang": "c#",
+      "code": "Some code here;",
+      "creation_date": "2021-09-23T08:02:19.608Z",
+      "author": 1,
+      "is_private": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 16,
+    "fields": {
+      "name": "Hello world",
+      "lang": "c#",
+      "code": "Code",
+      "creation_date": "2021-09-23T08:39:29.311Z",
+      "author": 3,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 17,
+    "fields": {
+      "name": "String",
+      "lang": "js",
+      "code": "var a = \"text\"",
+      "creation_date": "2021-09-23T08:39:29.311Z",
+      "author": 3,
+      "is_private": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 18,
+    "fields": {
+      "name": "user3",
+      "lang": "js",
+      "code": "333333",
+      "creation_date": "2021-09-23T08:49:43.180Z",
+      "author": 4,
+      "is_private": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 19,
+    "fields": {
+      "name": "User3-test",
+      "lang": "php",
+      "code": "Some code 123",
+      "creation_date": "2021-09-23T08:49:43.180Z",
+      "author": 4,
+      "is_private": false
+    }
+  },
+  {
+    "model": "MainApp.comment",
+    "pk": 7,
+    "fields": {
+      "text": "Test",
+      "creation_date": "2021-09-23T10:36:10.551Z",
+      "author": 1,
+      "snippet": 8
+    }
+  },
+  {
+    "model": "MainApp.comment",
+    "pk": 8,
+    "fields": {
+      "text": "first nah",
+      "creation_date": "2021-09-23T10:36:10.551Z",
+      "author": 1,
+      "snippet": 16
+    }
+  }
+]

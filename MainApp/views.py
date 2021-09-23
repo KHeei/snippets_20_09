@@ -48,6 +48,7 @@ def snippets_my(request):
     }
     return render(request, 'pages/view_snippets.html', context)
 
+
 @login_required
 def snippet_edit(request, id):
     if request.method == "GET":
@@ -144,4 +145,3 @@ def comment_add(request):
             return redirect(f'/snippets/page/{snippet_id}')
 
     raise Http404
-
