@@ -3,9 +3,9 @@
 {% block content %}
 <!-- Begin page content -->
  <div class="row">
-            <div class="col-4 offset-2">
+            <div class="col-4 offset-2" style="margin-left:11%">
                 Список сниппетов:
-                <table class="table table-striped" style="width:800px">
+                <table class="table table-striped" style="width:880px;">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -14,6 +14,7 @@
                             <th scope="col">Snippet</th>
                             <th scope="col">Дата создания</th>
                             <th scope="col">Автор</th>
+                            <th scope="col">Is private</th>
                             {% if request.user.is_authenticated %}<th scope="col"></th> {% endif %}
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                             <td>{{i.code}}</td>
                             <td>{{i.creation_date|date:"Y-m-d"}}</td>
                             <td>{{i.author.username|default:"Отсутвует"}}</td>
+                            <td>{% if i.is_private %}<i style="color:red" class="fas fa-lock"></i>{% else %} <i style="color:green" class="fas fa-lock-open"></i> {% endif %}</td>
                             {% if request.user.is_authenticated %}
                             <td><a href="{% url 'Delete' i.id %}"><i class="fas fa-ban" style="color:red"></i></a></td>
                             {% endif %}

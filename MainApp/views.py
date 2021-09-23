@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
 from MainApp.froms import SnippetForm
+from MainApp.froms import UserForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 
@@ -30,7 +31,7 @@ def add_snippet_page(request):
 
 
 def snippets_page(request):
-    snippet = Snippet.objects.all()
+    snippet = Snippet.objects.filter(is_private=False)
     context = {
         "pagename": 'Просмотр сниппетов',
         "snippets": snippet
@@ -92,3 +93,24 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('Home')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Home')
+        else:
+            context = {
+                "pagename": "Регистрация пользователя",
+                "form": form
+            }
+            return render(request, 'pages/register.html', context)
+    else:
+        form = UserForm()
+        context = {
+            "pagename": "Регистрация пользователя",
+            "form": form
+        }
+        return render(request, 'pages/register.html', context)
