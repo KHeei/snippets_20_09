@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
-from MainApp.froms import SnippetForm
+from MainApp.froms import SnippetForm, CommentForm
 from MainApp.froms import UserForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -73,6 +73,18 @@ def snippet_delete(request, id):
         snippet.delete()
         return redirect('List')
 
+@login_required
+def snippet_page(request, id):
+    snippet = get_object_or_404(Snippet, pk=id)
+    comment = snippet.comments.all()
+    form = CommentForm()
+    context = {
+        "snippet": snippet,
+        "form": form,
+        "comments": comment
+    }
+    return render(request, 'pages/snippet_page.html', context)
+
 
 def login(request):
     if request.method == 'POST':
@@ -114,3 +126,19 @@ def register(request):
             "form": form
         }
         return render(request, 'pages/register.html', context)
+
+
+def comment_add(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        snippet_id = request.POST["id"]
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            snippet = Snippet.objects.get(id=snippet_id)
+            comment.snippet = snippet
+            comment.save()
+            return redirect(f'/snippets/page/{snippet_id}')
+
+    raise Http404
+

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>Наименование: {{ snippet.name }}</div>
+<div>Язык: {{ snippet.lang }}</div>
+<div>Код: {{ snippet.code }}</div>
+<form action="{% url 'Comment_Add' %}" method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <input hidden name="id" type="text" value="{{ snippet.id }}">
+    <button style="width:200px;" class="btn btn-primary btn-block" type="submit" >Отправить</button>
+</form>
+<hr>
+<table border="1">
+   <tr>
+       <th>Автор</th>
+       <th>Комментарий</th>
+   </tr>
+   {% for comment in comments %}
+   <tr>
+       <td>{{comment.author.username}}</td>
+       <td>{{comment.text}}</td>
+   </tr>
+   {% endfor %}
+</table>
+{% endblock %}
