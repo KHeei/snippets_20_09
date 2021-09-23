@@ -6,6 +6,7 @@ from MainApp.froms import UserForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from pygments.lexers import guess_lexer
 
 
 def index_page(request):
