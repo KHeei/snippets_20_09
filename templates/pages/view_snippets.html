@@ -11,12 +11,12 @@
             <tr>
                 <th scope="col"></th>
                 <th scope="col">ID
-                    <a href="?lang={{selected}}&field=id&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
-                    <a href="?lang={{selected}}&field=id&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=id&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=id&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
                 </th>
                 <th scope="col">Название
-                    <a href="?lang={{selected}}&field=name&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
-                    <a href="?lang={{selected}}&field=name&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=name&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=name&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
                 </th>
                 <th scope="col">Язык<br>
                     <form action="" method="GET">
@@ -34,13 +34,13 @@
                 </th>
                 <th scope="col">Snippet</th>
                 <th scope="col">Дата создания
-                    <a href="?lang={{selected}}&author={{selected_author}}&field=date&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
                     <a href="?lang={{selected}}&author={{selected_author}}&field=date&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=date&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
                 </th>
                 <th scope="col">Автор<br>
                     <form action="" method="GET">
                         <select name="author" onchange="form.submit()">
-                            <option value="all">
+                            <option value="0">
                                 --------
                             </option>
                             {% for author in authors %}

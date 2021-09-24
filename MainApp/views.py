@@ -61,7 +61,7 @@ def snippets_page(request):
     else:
         snippet = Snippet.objects.filter(is_private=False)
 
-    if lang != 'all' or author != 0:
+    if lang != 'all' or int(author) != 0:
         snippet = snippet.filter(Q(lang=lang) | Q(author=author))
 
     fields_name = {"id": "id", "name": "name", "date": "creation_date"}
