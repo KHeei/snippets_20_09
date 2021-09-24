@@ -19,11 +19,11 @@ class Snippet(models.Model):
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE, related_name="comments")
     is_private = models.BooleanField(default=False)
 
-    def __repr__(self):
-        return f"S: {self.name} {self.author}"
+    # def __repr__(self):
+    #     return f"S: {self.name} {self.author}"
 
-    def __str__(self):
-        return self.__repr__()
+    # def __str__(self):
+    #     return self.__repr__()
 
 
 class Comment(models.Model):

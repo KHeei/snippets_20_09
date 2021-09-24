@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load my_tags %}
 <!-- Begin page content -->
 <div class="row">
     <div class="col-4 offset-2" style="margin-left:5%">
@@ -33,10 +34,23 @@
                 </th>
                 <th scope="col">Snippet</th>
                 <th scope="col">Дата создания
-                    <a href="?lang={{selected}}&field=date&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
-                    <a href="?lang={{selected}}&field=date&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=date&order=desc"><i class="fas fa-long-arrow-alt-up"></i></a>
+                    <a href="?lang={{selected}}&author={{selected_author}}&field=date&order=asc"><i class="fas fa-long-arrow-alt-down"></i></a>
                 </th>
-                <th scope="col">Автор</th>
+                <th scope="col">Автор<br>
+                    <form action="" method="GET">
+                        <select name="author" onchange="form.submit()">
+                            <option value="all">
+                                --------
+                            </option>
+                            {% for author in authors %}
+                            <option {% if selected_author|to_int == author.id|to_int %} selected {% endif %} value="{{author.id}}">
+                                {{author.author}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                </th>
                 <th scope="col">Is private</th>
                 {% if request.user.is_authenticated %}
                 <th scope="col"></th>

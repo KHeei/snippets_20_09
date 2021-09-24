@@ -9,6 +9,23 @@ from django.contrib import messages
 from django.db.models import Q
 
 
+def unique(list1):
+    # initialize a null list
+    unique_list = []
+
+    # traverse for all elements
+    for x in list1:
+        # check if exists in unique_list or not
+        author = {
+            "id": x.author_id,
+            "author": x.author
+        }
+        if author not in unique_list:
+            unique_list.append(author)
+
+    return unique_list
+
+
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
@@ -35,14 +52,17 @@ def add_snippet_page(request):
 
 def snippets_page(request):
     lang = request.GET.get("lang", 'all')
+    author = request.GET.get("author", 0)
+    author_list = Snippet.objects.only("author").filter(author__isnull=False)
+    author_list = unique(author_list)
 
     if request.user.is_authenticated:
         snippet = Snippet.objects.filter(Q(is_private=False) | Q(author=request.user))
     else:
         snippet = Snippet.objects.filter(is_private=False)
 
-    if lang != 'all':
-        snippet = snippet.filter(lang=lang)
+    if lang != 'all' or author != 0:
+        snippet = snippet.filter(Q(lang=lang) | Q(author=author))
 
     fields_name = {"id": "id", "name": "name", "date": "creation_date"}
 
@@ -57,7 +77,9 @@ def snippets_page(request):
         "pagename": 'Просмотр сниппетов',
         "snippets": snippet,
         "langs": LANG_CHOICE,
-        "selected": lang
+        "selected": lang,
+        "selected_author": author,
+        "authors": author_list
     }
     return render(request, 'pages/view_snippets.html', context)
 
@@ -83,7 +105,7 @@ def snippets_my(request):
         "pagename": 'Просмотр моих сниппетов',
         "snippets": snippet,
         "langs": LANG_CHOICE,
-        "selected": lang
+        "selected": lang,
     }
     return render(request, 'pages/view_snippets.html', context)
 
