@@ -35,6 +35,7 @@ def add_snippet_page(request):
 
 def snippets_page(request):
     lang = request.GET.get("lang", 'all')
+
     if request.user.is_authenticated:
         snippet = Snippet.objects.filter(Q(is_private=False) | Q(author=request.user))
     else:
@@ -42,6 +43,16 @@ def snippets_page(request):
 
     if lang != 'all':
         snippet = snippet.filter(lang=lang)
+
+    fields_name = {"id": "id", "name": "name", "date": "creation_date"}
+
+    sort_field = request.GET.get("field", 'id')
+    sort_order = request.GET.get("order", 'asc')
+    if sort_order == 'desc':
+        snippet = snippet.order_by('-'+fields_name[sort_field])
+    else:
+        snippet = snippet.order_by(fields_name[sort_field])
+
     context = {
         "pagename": 'Просмотр сниппетов',
         "snippets": snippet,
@@ -58,6 +69,16 @@ def snippets_my(request):
         snippet = Snippet.objects.filter(author=request.user)
     else:
         snippet = Snippet.objects.filter(author=request.user).filter(lang=lang)
+
+    fields_name = {"id": "id", "name": "name", "date": "creation_date"}
+
+    sort_field = request.GET.get("field", 'id')
+    sort_order = request.GET.get("order", 'asc')
+    if sort_order == 'desc':
+        snippet = snippet.order_by('-'+fields_name[sort_field])
+    else:
+        snippet = snippet.order_by(fields_name[sort_field])
+
     context = {
         "pagename": 'Просмотр моих сниппетов',
         "snippets": snippet,
