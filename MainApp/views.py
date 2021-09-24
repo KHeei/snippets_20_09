@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from MainApp.models import Snippet
+from MainApp.models import Snippet, LANG_CHOICE
 from MainApp.froms import SnippetForm, CommentForm
 from MainApp.froms import UserForm
 from django.contrib import auth
@@ -34,20 +34,32 @@ def add_snippet_page(request):
 
 
 def snippets_page(request):
-    snippet = Snippet.objects.filter(is_private=False)
+    lang = request.GET.get("lang", 'all')
+    if lang == 'all' or lang == '--------':
+        snippet = Snippet.objects.filter(is_private=False)
+    else:
+        snippet = Snippet.objects.filter(is_private=False).filter(lang=lang)
     context = {
         "pagename": 'Просмотр сниппетов',
-        "snippets": snippet
+        "snippets": snippet,
+        "langs": LANG_CHOICE,
+        "selected": lang
     }
     return render(request, 'pages/view_snippets.html', context)
 
 
 @login_required
 def snippets_my(request):
-    snippet = Snippet.objects.filter(author=request.user)
+    lang = request.GET.get("lang", 'all')
+    if lang == 'all' or lang == '--------':
+        snippet = Snippet.objects.filter(author=request.user)
+    else:
+        snippet = Snippet.objects.filter(author=request.user).filter(lang=lang)
     context = {
         "pagename": 'Просмотр моих сниппетов',
-        "snippets": snippet
+        "snippets": snippet,
+        "langs": LANG_CHOICE,
+        "selected": lang
     }
     return render(request, 'pages/view_snippets.html', context)
 

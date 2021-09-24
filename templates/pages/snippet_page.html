@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load my_tags %}
 <div>Наименование: {{ snippet.name }}</div>
 <div>Язык: {{ snippet.lang }}</div>
-<div>Код: {{ snippet.code }}</div>
+{% autoescape off %}
+<div>Код: {{ snippet.code|repl }}</div>
+{% endautoescape %}
 <hr>
 {% if request.user.is_authenticated %}
 <form action="{% url 'Comment_Add' %}" method="POST">{% csrf_token %}
