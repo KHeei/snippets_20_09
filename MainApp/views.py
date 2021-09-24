@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet, LANG_CHOICE
 from MainApp.froms import SnippetForm, CommentForm
@@ -6,7 +6,7 @@ from MainApp.froms import UserForm
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pygments.lexers import guess_lexer
+from django.db.models import Q
 
 
 def index_page(request):
@@ -35,10 +35,13 @@ def add_snippet_page(request):
 
 def snippets_page(request):
     lang = request.GET.get("lang", 'all')
-    if lang == 'all' or lang == '--------':
-        snippet = Snippet.objects.filter(is_private=False)
+    if request.user.is_authenticated:
+        snippet = Snippet.objects.filter(Q(is_private=False) | Q(author=request.user))
     else:
-        snippet = Snippet.objects.filter(is_private=False).filter(lang=lang)
+        snippet = Snippet.objects.filter(is_private=False)
+
+    if lang != 'all':
+        snippet = snippet.filter(lang=lang)
     context = {
         "pagename": 'Просмотр сниппетов',
         "snippets": snippet,
@@ -76,6 +79,8 @@ def snippet_edit(request, id):
         return render(request, 'pages/add_snippet.html', context)
     # POST
     snippet = get_object_or_404(Snippet, pk=id)
+    if snippet.author != request.user:
+        raise HttpResponseForbidden
     form = SnippetForm(request.POST, instance=snippet)
     if form.is_valid():
         form.save()
@@ -87,6 +92,8 @@ def snippet_edit(request, id):
 def snippet_delete(request, id):
     if request.method == "GET":
         snippet = get_object_or_404(Snippet, pk=id)
+        if snippet.author != request.user:
+            raise HttpResponseForbidden
         snippet.delete()
         return redirect('List')
 
