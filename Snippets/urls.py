@@ -32,5 +32,5 @@ urlpatterns = [
     path('auth/logout', views.logout, name="Logout"),
     path('auth/register', views.register, name="Register"),
     path('comment/add', views.comment_add, name="Comment_Add"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

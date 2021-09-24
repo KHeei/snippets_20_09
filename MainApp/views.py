@@ -160,7 +160,7 @@ def register(request):
 @login_required
 def comment_add(request):
     if request.method == 'POST':
-        form = CommentForm(request.POST)
+        form = CommentForm(request.POST, request.FILES)
         snippet_id = request.POST["id"]
         if form.is_valid():
             comment = form.save(commit=False)

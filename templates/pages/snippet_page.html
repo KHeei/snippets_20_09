@@ -9,7 +9,7 @@
 {% endautoescape %}
 <hr>
 {% if request.user.is_authenticated %}
-<form action="{% url 'Comment_Add' %}" method="POST">{% csrf_token %}
+<form action="{% url 'Comment_Add' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
     <input hidden name="id" type="text" value="{{ snippet.id }}">
     <button style="width:200px;" class="btn btn-primary btn-block" type="submit">Отправить</button>
@@ -29,6 +29,7 @@
     <tr>
         <td>{{comment.author.username}}</td>
         <td>{{comment.text}}</td>
+        <td><img width="250px;" height="300px;" src="{{ MEDIA_URL }}{{ comment.image }}"></td>
     </tr>
     {% endfor %}
 </table>
